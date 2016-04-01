@@ -1,0 +1,26 @@
+{
+  "name": "file-upload-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevMountain/file-upload-example.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevMountain/file-upload-example/issues"
+  },
+  "homepage": "https://github.com/DevMountain/file-upload-example#readme",
+  "dependencies": {
+    "aws-sdk": "2.2.28",
+    "body-parser": "1.14.2",
+    "express": "4.13.3",
+    "express-session": "1.13.0",
+    "multer": "1.1.0"
+  }
+}
