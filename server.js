@@ -41,21 +41,38 @@ app.post('/api/users/me/avatar', upload.single('avatar'), function(req, res){
 
 	console.log('file', req.file);
 
-	fs.readFile(req.file.path, {encoding: 'binary'}, function(err, data){
+	//obligatory security measures here
+
+	fs.readFile(req.file.path, function(err, data){
 
 	  if (err){
 	  	return res.status(500).end();
 	  }
 
+	  var filename = 'avatar-'+new Date().getTime().toString();
+
+	  switch(req.file.mimetype) {
+	  	case 'image/jpeg':
+	  	filename += '.jpg';
+	  	break;
+	  }
+
+	  var fileBuffer = fs.readFileSync(req.file.path);
+
 		s3.putObject({
 	    Bucket: S3_BUCKET,
-	    Key: 'avatars/'+req.session.user._id+'.jpg',//req.file.originalname,
-	    Body: data
+	    Key: filename,
+	    Body: data,
+	    ACL: 'public-read',
+	    ContentType: req.file.mimetype
 	  }, function (perr, pres) {
 		  if (perr) {
 		    console.log("Error uploading data: ", perr);
 		  } else {
 		    console.log("Successfully uploaded data to myBucket/myKey");
+
+		    //save reference to db
+
 		    return res.status(200).end();
 		  }
 		});
